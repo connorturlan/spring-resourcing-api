@@ -54,7 +54,9 @@ use a linking table for relations between temps and jobs.
 
 ## Future Plans
 
-...
+-   Add the find by id route for Jobs.
+-   Add Temp Controller and Auxiliaries.
+-   Add relations between Jobs and Temps
 
 ## Related Projects
 
