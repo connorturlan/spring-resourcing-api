@@ -6,8 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import resourcingapi.connorturlan.com.au.Job.Job;
-
 @Entity
 public class Temp {
 	@Id
@@ -23,5 +21,17 @@ public class Temp {
 	public Temp() {
 		firstName = "John";
 		lastName = "Smith";
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
 	}
 }

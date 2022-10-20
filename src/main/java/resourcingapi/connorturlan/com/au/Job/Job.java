@@ -3,7 +3,6 @@ package resourcingapi.connorturlan.com.au.Job;
 import javax.persistence.Entity;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
