@@ -13,7 +13,7 @@ public class JobService {
 	@Autowired
 	private JobRepository repository;
 
-	public List<Job> GetAll() {
+	public List<Job> FindAll() {
 		return repository.findAll();
 	}
 }
