@@ -2,6 +2,7 @@ package resourcingapi.connorturlan.com.au.Job;
 
 import javax.persistence.Entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,12 +20,12 @@ public class Job {
 	String name;
 
 	@Column
-	Long startDate;
+	LocalDate startDate;
 
 	@Column
-	Long endDate;
+	LocalDate endDate;
 
-	public Job(String name, Long startDate, Long endDate) {
+	public Job(String name, LocalDate startDate, LocalDate endDate) {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -32,8 +33,8 @@ public class Job {
 
 	public Job() {
 		this.name = "some job";
-		this.startDate = 0L;
-		this.endDate = 0L;
+		this.startDate = LocalDate.now();
+		this.endDate = LocalDate.now();
 	}
 
 	public long getId() {
@@ -44,11 +45,11 @@ public class Job {
 		return name;
 	}
 
-	public Long getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public Long getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 }

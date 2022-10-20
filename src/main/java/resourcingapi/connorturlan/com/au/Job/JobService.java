@@ -1,5 +1,6 @@
 package resourcingapi.connorturlan.com.au.Job;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,10 +21,13 @@ public class JobService {
 
 	public Job Create(JobCreateDTO data) {
 		String name = data.getName().trim();
-		Long startDate = data.getStartDate();
-		Long endDate = data.getEndDate();
+		LocalDate start = data.getStartDate();
+		LocalDate end = data.getEndDate();
 
-		Job job = new Job(name, startDate, endDate);
+		start = (start != null) ? start : LocalDate.now();
+		end = (end != null) ? end : LocalDate.now();
+
+		Job job = new Job(name, start, end);
 		repository.save(job);
 		return job;
 	}

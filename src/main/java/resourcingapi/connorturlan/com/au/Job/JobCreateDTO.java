@@ -1,21 +1,18 @@
 package resourcingapi.connorturlan.com.au.Job;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
 
 public class JobCreateDTO {
 	@NotBlank
 	String name;
 	
-	@PositiveOrZero
-	Long startDate;
+	LocalDate startDate;
 
-	@PositiveOrZero
-	Long endDate;
+	LocalDate endDate;
 
-	public JobCreateDTO(String name, Long start, Long end) {
+	public JobCreateDTO(String name, LocalDate start, LocalDate end) {
 		this.name = name;
 		
 		startDate = start;
@@ -26,11 +23,11 @@ public class JobCreateDTO {
 		return name;
 	}
 
-	public Long getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public Long getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 }
