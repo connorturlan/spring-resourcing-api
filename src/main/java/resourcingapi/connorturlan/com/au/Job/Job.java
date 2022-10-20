@@ -35,4 +35,20 @@ public class Job {
 		this.startDate = 0L;
 		this.endDate = 0L;
 	}
+
+	public long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Long getStartDate() {
+		return startDate;
+	}
+
+	public Long getEndDate() {
+		return endDate;
+	}
 }
