@@ -4,7 +4,7 @@
 
 ## Setup
 
-...
+[Update the properties file to suit your SQL server.](src\main\resources\application.properties)
 
 ## MVP
 
