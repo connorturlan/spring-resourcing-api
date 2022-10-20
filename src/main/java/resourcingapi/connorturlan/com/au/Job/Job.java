@@ -9,8 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import resourcingapi.connorturlan.com.au.Temp.Temp;
-
 @Entity
 public class Job {
 	@Id
@@ -21,14 +19,20 @@ public class Job {
 	String name;
 
 	@Column
-	Date startDate;
+	Long startDate;
 
 	@Column
-	Date endDate;
+	Long endDate;
+
+	public Job(String name, Long startDate, Long endDate) {
+		this.name = name;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
 
 	public Job() {
-		name = "john smith";
-		startDate = new Date();
-		endDate = new Date();
+		this.name = "some job";
+		this.startDate = 0L;
+		this.endDate = 0L;
 	}
 }
