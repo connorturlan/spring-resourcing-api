@@ -18,6 +18,13 @@ public class TempService {
 	}
 
 	public Temp Create(TempCreateDTO data) {
-		return null;
+		// format the data to be meaningful.
+		String first = data.getFirstName().trim();
+		String last = data.getLastName().trim();
+
+		// create the new Temp object, and send it to the DB.
+		Temp temp = new Temp(first, last);
+		repository.save(temp);
+		return temp;
 	}
 }

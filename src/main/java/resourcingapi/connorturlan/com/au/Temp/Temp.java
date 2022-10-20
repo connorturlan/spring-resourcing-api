@@ -18,6 +18,11 @@ public class Temp {
 	@Column
 	String lastName;
 
+	public Temp(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 	public Temp() {
 		firstName = "John";
 		lastName = "Smith";
