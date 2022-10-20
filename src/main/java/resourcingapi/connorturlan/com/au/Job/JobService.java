@@ -2,6 +2,7 @@ package resourcingapi.connorturlan.com.au.Job;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -16,6 +17,10 @@ public class JobService {
 
 	public List<Job> FindAll() {
 		return repository.findAll();
+	}
+
+	public Optional<Job> FindOne(long id) {
+		return repository.findById(id);
 	}
 
 	public Job Create(JobCreateDTO data) {

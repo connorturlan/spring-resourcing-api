@@ -1,6 +1,7 @@
 package resourcingapi.connorturlan.com.au.Temp;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +16,10 @@ public class TempService {
 
 	public List<Temp> FindAll() {
 		return repository.findAll();
+	}
+
+	public Optional<Temp> FindOne(long id) {
+		return repository.findById(id);
 	}
 
 	public Temp Create(TempCreateDTO data) {
