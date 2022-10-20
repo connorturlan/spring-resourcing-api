@@ -39,7 +39,10 @@ PATCH /jobs/{id} - Updates job, endpoint should be used to assign temps to jobs
 
 ## Implementation
 
-...
+```
+jobs reference temps through a many to one with temps.
+use a linking table for relations between temps and jobs.
+```
 
 ## Known Issues
 
