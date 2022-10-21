@@ -8,6 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import resourcingapi.connorturlan.com.au.Temp.Temp;
 
 @Entity
 public class Job {
@@ -23,6 +27,18 @@ public class Job {
 
 	@Column
 	LocalDate endDate;
+
+	@ManyToOne
+	@JoinColumn(name = "temp_id")
+	private Temp temp;
+
+	public Temp getTemp() {
+		return temp;
+	}
+
+	public void setTemp(Temp temp) {
+		this.temp = temp;
+	}
 
 	public Job(String name, LocalDate startDate, LocalDate endDate) {
 		this.name = name;

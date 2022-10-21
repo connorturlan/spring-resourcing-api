@@ -9,28 +9,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import resourcingapi.connorturlan.com.au.Temp.Temp;
+import resourcingapi.connorturlan.com.au.Temp.TempService;
+
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
 	@Autowired
-	private JobService service;
+	private JobService jobService;
+	
+	@Autowired
+	private TempService tempService;
 
 	@GetMapping
-	public ResponseEntity<List<Job>> ReadAll() {
-		List<Job> jobs = service.FindAll();
+	public ResponseEntity<List<Job>> FindAll() {
+		List<Job> jobs = jobService.FindAll();
 		return new ResponseEntity<>(jobs, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Job> ReadOne(@PathVariable long id) {
+	public ResponseEntity<Job> FindOne(@PathVariable long id) {
 		// try and get the requested job.
-		Optional<Job> maybeJob = service.FindOne(id);
+		Optional<Job> maybeJob = jobService.FindOne(id);
 
 		// return an error if the job id isn't found.
 		if (maybeJob.isEmpty()) {
@@ -42,8 +49,36 @@ public class JobController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Job> Create(@Valid @RequestBody JobCreateDTO data) {
-		Job job = service.Create(data);
+	public ResponseEntity<Job> CreateJob(@Valid @RequestBody JobCreateDTO data) {
+		Job job = jobService.Create(data);
 		return new ResponseEntity<>(job, HttpStatus.CREATED);
+	}
+
+	@PatchMapping("/{id}/{temp_id}")
+	public ResponseEntity<Job> AssignJob(@PathVariable long id, @PathVariable long temp_id) {
+		// try and get the requested job.
+		Optional<Job> maybeJob = jobService.FindOne(id);
+
+		// return an error if the job id isn't found.
+		if (maybeJob.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// try and get the requested temp.
+		Optional<Temp> maybeTemp = tempService.FindOne(temp_id);
+
+		// return an error if the job id isn't found.
+		if (maybeTemp.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		// add the job link.
+		// maybeJob.get().setTemp(new Temp());
+		Job job = maybeJob.get();
+		job.setTemp(maybeTemp.get());
+		jobService.Update(job);
+
+		// otherwise return the requested job.
+		return new ResponseEntity<>(maybeJob.get(), HttpStatus.CREATED);
 	}
 }

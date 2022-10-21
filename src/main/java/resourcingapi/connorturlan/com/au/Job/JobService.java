@@ -35,4 +35,9 @@ public class JobService {
 		repository.save(job);
 		return job;
 	}
+
+	public Job Update(Job job) {
+		repository.save(job);
+		return job;
+	}
 }
