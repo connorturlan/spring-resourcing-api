@@ -1,6 +1,5 @@
 package resourcingapi.connorturlan.com.au.Job;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +34,7 @@ public class JobController {
 	@GetMapping
 	@ResponseBody
 	public ResponseEntity<List<Job>> HandleGet(@RequestParam(required = false) Boolean assigned) {
-		// check if there is a param to parse.
+		// route the request based upon whether or not there is a url param specified.
 		if (assigned != null) {
 			return FindFilterAssigned(assigned);
 		}

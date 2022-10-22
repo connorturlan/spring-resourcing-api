@@ -4,7 +4,9 @@
 
 ## Setup
 
-[Update the properties file to suit your SQL server.](src\main\resources\application.properties)
+This project is written for Java 18.
+
+To setup, [update the properties file to suit your SQL server.](src\main\resources\application.properties)
 
 ## MVP
 
@@ -32,17 +34,19 @@ PATCH /jobs/{id} - Updates job, endpoint should be used to assign temps to jobs
 -   Temps can only have one job at a time (can’t be doing 2 jobs on the same date)
 -   Temps can have many jobs, and job can have 1 temp assigned
 -   Should be able to assign existing temps to jobs via POST /jobs & PATCH /jobs/{id}
--   You must use a relational database## Bonus- Temps should be able to manage other temps (will require an additional field)
+-   You must use a relational database
+
+### Bonus- Temps should be able to manage other temps (will require an additional field)
+
 -   When you request a temp record it should display the reports of that temp
 -   Should be represented in the database as a nested set (research what nested sets are)
 -   GET /temps/tree - should display the whole tree of temps
 
 ## Implementation
 
-```
-jobs reference temps through a many to one with temps.
-use a linking table for relations between temps and jobs.
-```
+The implementation for this project has two main controllers, one for Jobs and the other for Temps.
+
+Temps can have multiple jobs, so long as they don't overlap. Jobs can only have one Temp.
 
 ## Known Issues
 
@@ -55,14 +59,9 @@ use a linking table for relations between temps and jobs.
 ## Future Plans - TODO
 
 ```
-GET /jobs
-	...?assigned={true|false} - Filter by whether a job is assigned to a temp or not
-
 GET /temps
 	...?jobId={jobId} - List temps that are available for a job based on the jobs date range
 ```
-
-- Use JsonIgnoreProperties instead of JsonIdentityInfo for less cluttered responses.
 
 ## Related Projects
 
