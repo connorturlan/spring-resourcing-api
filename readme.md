@@ -60,13 +60,9 @@ GET /jobs
 
 GET /temps
 	...?jobId={jobId} - List temps that are available for a job based on the jobs date range
-	.../{id} - (should also display jobs they’ve been assigned to)
-
-PATCH /jobs/{id} - Updates job, endpoint should be used to assign temps to jobs
 ```
 
--   Add the find by id route for Jobs.
--   Add relations between Jobs and Temps
+- Use JsonIgnoreProperties instead of JsonIdentityInfo for less cluttered responses.
 
 ## Related Projects
 
