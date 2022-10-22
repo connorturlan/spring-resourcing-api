@@ -9,9 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import resourcingapi.connorturlan.com.au.Job.Job;
 
 @Entity
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.StringIdGenerator.class, 
+	property = "jobs"
+)
 public class Temp {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

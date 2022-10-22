@@ -11,9 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import resourcingapi.connorturlan.com.au.Temp.Temp;
 
 @Entity
+@JsonIdentityInfo(
+	generator = ObjectIdGenerators.StringIdGenerator.class, 
+	property = "temp"
+)
 public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
