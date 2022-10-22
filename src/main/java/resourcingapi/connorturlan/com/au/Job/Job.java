@@ -11,16 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import resourcingapi.connorturlan.com.au.Temp.Temp;
 
 @Entity
-@JsonIdentityInfo(
-	generator = ObjectIdGenerators.StringIdGenerator.class, 
-	property = "temp"
-)
+@JsonIgnoreProperties({"temp"})
 public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,14 +35,7 @@ public class Job {
 	@JoinColumn(name = "temp_id")
 	private Temp temp;
 
-	public Temp getTemp() {
-		return temp;
-	}
-
-	public void setTemp(Temp temp) {
-		this.temp = temp;
-	}
-
+	
 	public Job(String name, LocalDate startDate, LocalDate endDate) {
 		this.name = name;
 		this.startDate = startDate;
@@ -62,16 +51,24 @@ public class Job {
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public LocalDate getStartDate() {
 		return startDate;
 	}
-
+	
 	public LocalDate getEndDate() {
 		return endDate;
+	}
+
+	public Temp getTemp() {
+		return temp;
+	}
+	
+	public void setTemp(Temp temp) {
+		this.temp = temp;
 	}
 }
