@@ -58,10 +58,7 @@ Temps can have multiple jobs, so long as they don't overlap. Jobs can only have 
 
 ## Future Plans - TODO
 
-```
-GET /temps
-	...?jobId={jobId} - List temps that are available for a job based on the jobs date range
-```
+-   comment code blocks.
 
 ## Related Projects
 
