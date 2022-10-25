@@ -1,7 +1,9 @@
 package resourcingapi.connorturlan.com.au.Temp;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -13,24 +15,67 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import resourcingapi.connorturlan.com.au.Job.Job;
+import resourcingapi.connorturlan.com.au.Job.JobService;
 
 @RestController
 @RequestMapping("/temps")
 public class TempController {
 	@Autowired
-	private TempService service;
+	private TempService tempService;
+
+	@Autowired
+	private JobService jobService;
 
 	@GetMapping
-	public ResponseEntity<List<Temp>>ReadAll() {
-		List<Temp> temps = service.FindAll();
+	public ResponseEntity<List<Temp>> HandleGet(@RequestParam(required = false) Long jobId) {
+		if (jobId != null) {
+			return GetAvailableTemps(jobId);
+		}
+		return ReadAll();
+	}
+
+	public ResponseEntity<List<Temp>> ReadAll() {
+		List<Temp> temps = tempService.FindAll();
+		return new ResponseEntity<>(temps, HttpStatus.OK);
+	}
+
+	private boolean DateWithinRange(LocalDate start, LocalDate end, LocalDate test) {
+		// test whether a given date is within the range of two others inclusively.
+		return start.compareTo(test) >= 0 && end.compareTo(test) <= 0;
+	}
+
+	public ResponseEntity<List<Temp>> GetAvailableTemps(long jobId) {
+		// get the date range for the specified job.
+		Optional<Job> maybeJob = jobService.FindOne(jobId);
+		if (maybeJob.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+		Job job = maybeJob.get();
+		LocalDate startDate = job.getStartDate();
+		LocalDate endDate = job.getEndDate();
+
+		// get all temps, and filter out the temps with jobs within the date range.
+		List<Temp> allTemps = tempService.FindAll();
+		List<Temp> temps = allTemps.stream().filter(
+			temp -> temp.getJobs().stream().filter(
+				tempJob -> (
+							DateWithinRange(startDate, endDate, tempJob.getStartDate()) 
+							|| DateWithinRange(startDate, endDate, tempJob.getEndDate())
+						)
+					)
+				.collect(Collectors.toList()).size() <= 0
+				)
+			.collect(Collectors.toList());
+
 		return new ResponseEntity<>(temps, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Temp> ReadOne(@PathVariable long id) {
 		// try and get the requested job.
-		Optional<Temp> maybeJob = service.FindOne(id);
+		Optional<Temp> maybeJob = tempService.FindOne(id);
 
 		// return an error if the job id isn't found.
 		if (maybeJob.isEmpty()) {
@@ -43,7 +88,7 @@ public class TempController {
 
 	@PostMapping
 	public ResponseEntity<Temp>Create(@Valid @RequestBody TempCreateDTO data) {
-		Temp temp = service.Create(data);
+		Temp temp = tempService.Create(data);
 		return new ResponseEntity<Temp>(temp, HttpStatus.CREATED);
 	}
 }

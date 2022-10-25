@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import resourcingapi.connorturlan.com.au.Temp.Temp;
@@ -32,7 +31,6 @@ public class JobController {
 	private TempService tempService;
 
 	@GetMapping
-	@ResponseBody
 	public ResponseEntity<List<Job>> HandleGet(@RequestParam(required = false) Boolean assigned) {
 		// route the request based upon whether or not there is a url param specified.
 		if (assigned != null) {
