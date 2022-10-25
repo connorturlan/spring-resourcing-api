@@ -36,8 +36,9 @@ PATCH /jobs/{id} - Updates job, endpoint should be used to assign temps to jobs
 -   Should be able to assign existing temps to jobs via POST /jobs & PATCH /jobs/{id}
 -   You must use a relational database
 
-### Bonus- Temps should be able to manage other temps (will require an additional field)
+### Bonus
 
+-   Temps should be able to manage other temps (will require an additional field)
 -   When you request a temp record it should display the reports of that temp
 -   Should be represented in the database as a nested set (research what nested sets are)
 -   GET /temps/tree - should display the whole tree of temps
@@ -48,9 +49,14 @@ The implementation for this project has two main controllers, one for Jobs and t
 
 Temps can have multiple jobs, so long as they don't overlap. Jobs can only have one Temp.
 
+All temps/jobs can be requested with a GET method, and can be added to with a POST.
+
+There are specific routes to manage assigning jobs (POST /jobs/{jobId}/{tempId}), checking which jobs are assigned or not (GET /jobs?assigned={true|false}), and for finding temps that are available for a job (GET /temps?jobId={jobId}).
+
 ## Known Issues
 
-...
+-   No validation for overlapping temp jobs.
+-   No validation for invalid date ranges.
 
 ## Retrospective
 
@@ -58,6 +64,8 @@ Temps can have multiple jobs, so long as they don't overlap. Jobs can only have 
 
 ## Future Plans - TODO
 
+-   add validation to prevent temps from having two jobs that overlap.
+-   add validation to prevent a job endDate being before the startDate.
 -   comment code blocks.
 
 ## Related Projects

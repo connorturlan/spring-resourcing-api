@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import resourcingapi.connorturlan.com.au.Job.Job;
 
 @Entity
@@ -24,6 +26,7 @@ public class Temp {
 	String lastName;
 
 	@OneToMany(mappedBy = "temp")
+	@JsonIgnoreProperties({"temp"})
 	private List<Job> jobs;
 
 	public List<Job> getJobs() {

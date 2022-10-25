@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import resourcingapi.connorturlan.com.au.Temp.Temp;
 
 @Entity
-@JsonIgnoreProperties({"temp"})
 public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +32,7 @@ public class Job {
 
 	@ManyToOne
 	@JoinColumn(name = "temp_id")
+	@JsonIgnoreProperties({"jobs"})
 	private Temp temp;
 
 	
