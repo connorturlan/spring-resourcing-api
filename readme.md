@@ -55,18 +55,15 @@ There are specific routes to manage assigning jobs (POST /jobs/{jobId}/{tempId})
 
 ## Known Issues
 
--   No validation for overlapping temp jobs.
--   No validation for invalid date ranges.
+_N/A_
 
 ## Retrospective
 
 ...
 
-## Future Plans - TODO
+## Future Plans
 
--   add validation to prevent temps from having two jobs that overlap.
--   add validation to prevent a job endDate being before the startDate.
--   comment code blocks.
+-   Implement bonus features.
 
 ## Related Projects
 
