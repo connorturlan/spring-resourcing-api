@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import resourcingapi.connorturlan.com.au.Job.Job;
 import resourcingapi.connorturlan.com.au.Job.JobService;
 
+import resourcingapi.connorturlan.com.au.DateUtils.DateUtils;
+
 @RestController
 @RequestMapping("/temps")
 public class TempController {
@@ -56,8 +58,8 @@ public class TempController {
 		List<Temp> temps = allTemps.stream().filter(
 			temp -> temp.getJobs().stream().filter(
 				tempJob -> (
-							DateWithinRange(startDate, endDate, tempJob.getStartDate()) 
-							|| DateWithinRange(startDate, endDate, tempJob.getEndDate())
+							DateUtils.DateWithinRange(startDate, endDate, tempJob.getStartDate()) 
+							|| DateUtils.DateWithinRange(startDate, endDate, tempJob.getEndDate())
 						)
 					)
 				.collect(Collectors.toList()).size() <= 0
@@ -65,10 +67,6 @@ public class TempController {
 			.collect(Collectors.toList());
 
 		return new ResponseEntity<>(temps, HttpStatus.OK);
-	}
-
-	private boolean DateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate startDate2) {
-		return false;
 	}
 
 	@GetMapping("/{id}")

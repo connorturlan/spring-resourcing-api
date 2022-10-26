@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import resourcingapi.connorturlan.com.au.Temp.Temp;
 import resourcingapi.connorturlan.com.au.Temp.TempService;
 
+import resourcingapi.connorturlan.com.au.DateUtils.DateUtils;
+
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
@@ -94,8 +96,7 @@ public class JobController {
 
 		// check that the temp does not have a job that overlaps with this time frame.
 		for (Job tempJob : temp.getJobs()) {
-			if (DateWithinRange(job.getStartDate(), job.getEndDate(), tempJob.getStartDate()) 
-			|| DateWithinRange(job.getStartDate(), job.getEndDate(), tempJob.getEndDate())) {
+			if (DateUtils.DatesOverlap(tempJob.getStartDate(), tempJob.getEndDate(), job.getStartDate(), job.getEndDate())) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 		}
@@ -106,10 +107,6 @@ public class JobController {
 
 		// otherwise return the requested job.
 		return new ResponseEntity<>(maybeJob.get(), HttpStatus.CREATED);
-	}
-
-	private boolean DateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate startDate2) {
-		return false;
 	}
 
 	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {		
