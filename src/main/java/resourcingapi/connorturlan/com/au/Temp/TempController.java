@@ -43,11 +43,6 @@ public class TempController {
 		return new ResponseEntity<>(temps, HttpStatus.OK);
 	}
 
-	private boolean DateWithinRange(LocalDate start, LocalDate end, LocalDate test) {
-		// test whether a given date is within the range of two others inclusively.
-		return start.compareTo(test) >= 0 && end.compareTo(test) <= 0;
-	}
-
 	public ResponseEntity<List<Temp>> GetAvailableTemps(long jobId) {
 		// get the date range for the specified job.
 		Optional<Job> maybeJob = jobService.FindOne(jobId);
@@ -70,6 +65,10 @@ public class TempController {
 			.collect(Collectors.toList());
 
 		return new ResponseEntity<>(temps, HttpStatus.OK);
+	}
+
+	private boolean DateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate startDate2) {
+		return false;
 	}
 
 	@GetMapping("/{id}")

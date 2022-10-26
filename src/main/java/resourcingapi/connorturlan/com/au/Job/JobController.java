@@ -1,5 +1,6 @@
 package resourcingapi.connorturlan.com.au.Job;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,7 +61,13 @@ public class JobController {
 
 	@PostMapping
 	public ResponseEntity<Job> CreateJob(@Valid @RequestBody JobCreateDTO data) {
+		// validate the start date is before the end date.
+		if (data.getStartDate().compareTo(data.getEndDate()) > 0) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+
 		Job job = jobService.Create(data);
+
 		return new ResponseEntity<>(job, HttpStatus.CREATED);
 	}
 
@@ -82,14 +89,27 @@ public class JobController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		// add the job link.
-		// maybeJob.get().setTemp(new Temp());
 		Job job = maybeJob.get();
-		job.setTemp(maybeTemp.get());
+		Temp temp = maybeTemp.get();
+
+		// check that the temp does not have a job that overlaps with this time frame.
+		for (Job tempJob : temp.getJobs()) {
+			if (DateWithinRange(job.getStartDate(), job.getEndDate(), tempJob.getStartDate()) 
+			|| DateWithinRange(job.getStartDate(), job.getEndDate(), tempJob.getEndDate())) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		// add the job link.
+		job.setTemp(temp);
 		jobService.Update(job);
 
 		// otherwise return the requested job.
 		return new ResponseEntity<>(maybeJob.get(), HttpStatus.CREATED);
+	}
+
+	private boolean DateWithinRange(LocalDate startDate, LocalDate endDate, LocalDate startDate2) {
+		return false;
 	}
 
 	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {		
