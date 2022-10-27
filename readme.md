@@ -64,6 +64,9 @@ _N/A_
 ## Future Plans
 
 -   Implement bonus features.
+-   Modify date range and use JPQL Query.
+-   Add more validation to job and temp create DTO.
+-   Remove logic from controller to service.
 
 ## Related Projects
 

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,12 +24,15 @@ public class Job {
 	long id;
 
 	@Column
+	@NotBlank
 	String name;
 
 	@Column
+	@FutureOrPresent
 	LocalDate startDate;
 
 	@Column
+	@FutureOrPresent
 	LocalDate endDate;
 
 	@ManyToOne
