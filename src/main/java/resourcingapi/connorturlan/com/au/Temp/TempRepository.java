@@ -1,5 +1,11 @@
 package resourcingapi.connorturlan.com.au.Temp;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
-public interface TempRepository extends JpaRepository<Temp, Long> {}
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+public interface TempRepository extends JpaRepository<Temp, Long> {
+	@Query()
+  	List<Temp> findAllUnassigned();
+}

@@ -108,9 +108,10 @@ public class JobController {
 		return new ResponseEntity<>(maybeJob.get(), HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {		
-		List<Job> allJobs = jobService.FindAll();
-		List<Job> jobs = allJobs.stream().filter(job -> (job.getTemp() != null) == assigned).collect(Collectors.toList());
+	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {
+		List<Job> jobs = (assigned) ? jobService.FindAssigned() : jobService.FindUnassigned();
+		// List<Job> allJobs = jobService.FindAll();
+		// List<Job> jobs = allJobs.stream().filter(job -> (job.getTemp() != null) == assigned).collect(Collectors.toList());
 
 		return new ResponseEntity<>(jobs, HttpStatus.OK);
 	}

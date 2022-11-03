@@ -32,12 +32,20 @@ public class JobService {
 		end = (end != null) ? end : LocalDate.now();
 
 		Job job = new Job(name, start, end);
-		repository.save(job);
+		this.repository.save(job);
 		return job;
 	}
 
 	public Job Update(Job job) {
-		repository.save(job);
+		this.repository.save(job);
 		return job;
+	}
+
+	public List<Job> FindAssigned() {
+		return this.repository.FindAssigned();
+	}
+
+	public List<Job> FindUnassigned() {
+		return this.repository.FindUnassigned();
 	}
 }
