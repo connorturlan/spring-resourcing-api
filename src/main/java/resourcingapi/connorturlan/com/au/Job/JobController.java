@@ -2,7 +2,6 @@ package resourcingapi.connorturlan.com.au.Job;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -110,9 +109,6 @@ public class JobController {
 
 	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {
 		List<Job> jobs = (assigned) ? jobService.FindAssigned() : jobService.FindUnassigned();
-		// List<Job> allJobs = jobService.FindAll();
-		// List<Job> jobs = allJobs.stream().filter(job -> (job.getTemp() != null) == assigned).collect(Collectors.toList());
-
 		return new ResponseEntity<>(jobs, HttpStatus.OK);
 	}
 }
