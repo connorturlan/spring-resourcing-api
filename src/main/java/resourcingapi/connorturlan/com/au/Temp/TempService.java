@@ -32,4 +32,8 @@ public class TempService {
 		repository.save(temp);
 		return temp;
 	}
+
+	public List<Temp> FindAvailable(long jobId) {
+		return repository.FindAvailable();
+	}
 }
