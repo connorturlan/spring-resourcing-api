@@ -105,14 +105,11 @@ public class JobController {
 		jobService.Update(job);
 
 		// otherwise return the requested job.
-		return new ResponseEntity<>(maybeJob.get(), HttpStatus.CREATED);
+		return new ResponseEntity<>(job, HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<List<Job>> FindFilterAssigned(boolean assigned) {
 		List<Job> jobs = (assigned) ? jobService.FindAssigned() : jobService.FindUnassigned();
-		// List<Job> allJobs = jobService.FindAll();
-		// List<Job> jobs = allJobs.stream().filter(job -> (job.getTemp() != null) == assigned).collect(Collectors.toList());
-
 		return new ResponseEntity<>(jobs, HttpStatus.OK);
 	}
 }
