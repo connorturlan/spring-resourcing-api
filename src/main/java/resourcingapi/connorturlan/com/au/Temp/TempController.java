@@ -46,27 +46,29 @@ public class TempController {
 	}
 
 	public ResponseEntity<List<Temp>> GetAvailableTemps(long jobId) {
-		// get the date range for the specified job.
-		Optional<Job> maybeJob = jobService.FindOne(jobId);
-		if (maybeJob.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
-		Job job = maybeJob.get();
-		LocalDate startDate = job.getStartDate();
-		LocalDate endDate = job.getEndDate();
+		return new ResponseEntity<>(this.tempService.FindAvailable(jobId), HttpStatus.OK);
 
-		// get all temps, and filter out the temps with jobs within the date range.
-		List<Temp> allTemps = tempService.FindAll();
-		List<Temp> temps = allTemps.stream().filter(
-			temp -> temp.getJobs().stream().filter(
-				tempJob -> (
-							DateUtils.DateWithinRange(startDate, endDate, tempJob.getStartDate()) 
-							|| DateUtils.DateWithinRange(startDate, endDate, tempJob.getEndDate())
-						)
-					)
-				.collect(Collectors.toList()).size() <= 0
-				)
-			.collect(Collectors.toList());
+		// // get the date range for the specified job.
+		// Optional<Job> maybeJob = jobService.FindOne(jobId);
+		// if (maybeJob.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
+		// Job job = maybeJob.get();
+		// LocalDate startDate = job.getStartDate();
+		// LocalDate endDate = job.getEndDate();
 
-		return new ResponseEntity<>(temps, HttpStatus.OK);
+		// // get all temps, and filter out the temps with jobs within the date range.
+		// List<Temp> allTemps = tempService.FindAll();
+		// List<Temp> temps = allTemps.stream().filter(
+		// 	temp -> temp.getJobs().stream().filter(
+		// 		tempJob -> (
+		// 					DateUtils.DateWithinRange(startDate, endDate, tempJob.getStartDate()) 
+		// 					|| DateUtils.DateWithinRange(startDate, endDate, tempJob.getEndDate())
+		// 				)
+		// 			)
+		// 		.collect(Collectors.toList()).size() <= 0
+		// 		)
+		// 	.collect(Collectors.toList());
+
+		// return new ResponseEntity<>(temps, HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
