@@ -34,6 +34,6 @@ public class TempService {
 	}
 
 	public List<Temp> FindAvailable(long jobId) {
-		return repository.FindAvailable();
+		return repository.FindAvailable(jobId);
 	}
 }

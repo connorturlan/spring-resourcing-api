@@ -48,7 +48,7 @@ public class TempController {
 	public ResponseEntity<List<Temp>> GetAvailableTemps(long jobId) {
 		return new ResponseEntity<>(this.tempService.FindAvailable(jobId), HttpStatus.OK);
 
-		// get the date range for the specified job.
+		// // get the date range for the specified job.
 		// Optional<Job> maybeJob = jobService.FindOne(jobId);
 		// if (maybeJob.isEmpty()) { return new ResponseEntity<>(HttpStatus.NOT_FOUND); }
 		// Job job = maybeJob.get();
