@@ -47,16 +47,8 @@ public class JobController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Job> FindOne(@PathVariable long id) {
-		// try and get the requested job.
-		Optional<Job> maybeJob = jobService.FindOne(id);
-
-		// return an error if the job id isn't found.
-		if (maybeJob.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-		// otherwise return the requested job.
-		return new ResponseEntity<>(maybeJob.get(), HttpStatus.OK);
+		Job job = jobService.FindOne(id);
+		return new ResponseEntity<>(job, job != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping
@@ -74,23 +66,20 @@ public class JobController {
 	@PatchMapping("/{id}/{temp_id}")
 	public ResponseEntity<Job> AssignJob(@PathVariable long id, @PathVariable long temp_id) {
 		// try and get the requested job.
-		Optional<Job> maybeJob = jobService.FindOne(id);
+		Job job = jobService.FindOne(id);
 
 		// return an error if the job id isn't found.
-		if (maybeJob.isEmpty()) {
+		if (job == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 		// try and get the requested temp.
-		Optional<Temp> maybeTemp = tempService.FindOne(temp_id);
+		Temp temp = tempService.FindOne(temp_id);
 
 		// return an error if the job id isn't found.
-		if (maybeTemp.isEmpty()) {
+		if (temp == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-
-		Job job = maybeJob.get();
-		Temp temp = maybeTemp.get();
 
 		// check that the temp does not have a job that overlaps with this time frame.
 		for (Job tempJob : temp.getJobs()) {

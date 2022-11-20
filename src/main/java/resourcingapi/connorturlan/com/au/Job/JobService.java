@@ -19,8 +19,12 @@ public class JobService {
 		return repository.findAll();
 	}
 
-	public Optional<Job> FindOne(long id) {
-		return repository.findById(id);
+	public Job FindOne(long id) {
+		// try and get the requested job.
+		Optional<Job> maybeJob = repository.findById(id);
+
+		// return the found temp or null depending on if the optional is filled.
+		return maybeJob.isEmpty() ? null : maybeJob.get();
 	}
 
 	public Job Create(JobCreateDTO data) {

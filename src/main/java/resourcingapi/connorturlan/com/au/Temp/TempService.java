@@ -25,8 +25,12 @@ public class TempService {
 		return repository.findAll();
 	}
 
-	public Optional<Temp> FindOne(long id) {
-		return repository.findById(id);
+	public Temp FindOne(long id) {
+		// try and get the requested job.
+		Optional<Temp> maybeTemp = repository.findById(id);
+
+		// return the found temp or null depending on if the optional is filled.
+		return maybeTemp.isEmpty() ? null : maybeTemp.get();
 	}
 
 	public Temp Create(TempCreateDTO data) {
@@ -41,9 +45,8 @@ public class TempService {
 	}
 
 	public List<Temp> FindAvailable(long jobId) {
-		Optional<Job> maybeJob = jobService.FindOne(jobId);
-		if (maybeJob.isEmpty()) { return null; }
-		Job job = maybeJob.get();
+		Job job = jobService.FindOne(jobId);
+		if (job == null) { return null; }
 		LocalDate startDate = job.getStartDate();
 		LocalDate endDate = job.getEndDate();
 		

@@ -42,16 +42,8 @@ public class TempController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<Temp> ReadOne(@PathVariable long id) {
-		// try and get the requested job.
-		Optional<Temp> maybeJob = tempService.FindOne(id);
-
-		// return an error if the job id isn't found.
-		if (maybeJob.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-		// otherwise return the requested job.
-		return new ResponseEntity<>(maybeJob.get(), HttpStatus.OK);
+		Temp temp = tempService.FindOne(id);
+		return new ResponseEntity<>(temp, temp != null ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping
